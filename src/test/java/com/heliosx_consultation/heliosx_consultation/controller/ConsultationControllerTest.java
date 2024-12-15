@@ -90,7 +90,7 @@ class ConsultationControllerTest {
         PrescriptionResponse response = new PrescriptionResponse(true, "You can prescribe this treatment.");
         when(consultationService.evaluateAnswers(any(Page.class), any(List.class))).thenReturn(response);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/consultation/answers")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/consultation/answers/page1")
                         .param("page", "PAGE_1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -110,4 +110,63 @@ class ConsultationControllerTest {
                 .andExpect(content().json("""
                         {"canPrescribe":true,"message":"You can prescribe this treatment."}"""));
     }
+
+    @Test
+    void submitPage2AnswersReturnsPrescriptionResponse() throws Exception {
+        PrescriptionResponse response = new PrescriptionResponse(true, "You can prescribe this treatment.");
+        when(consultationService.evaluateAnswers(any(Page.class), any(List.class))).thenReturn(response);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/consultation/answers/page2")
+                        .param("page", "PAGE_2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                [
+                                  {
+                                    "id": "2",
+                                    "section": "SYMPTOMS",
+                                    "text": "Have you been sneezing more than usual?",
+                                    "treatmentType": "ALLERGY",
+                                    "options": [
+                                      {"text": "Everyday", "score": 5},
+                                      {"text": "Sometimes", "score": 3},
+                                      {"text": "Rarely", "score": 1}
+                                    ],
+                                    "userSubmission": "Everyday"
+                                  }
+                                ]
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {"canPrescribe":true,"message":"You can prescribe this treatment."}"""));
+    }
+
+    @Test
+    void submitPage2AnswersReturnsFailResponse() throws Exception {
+        PrescriptionResponse response = new PrescriptionResponse(false, "Fail: Insufficient score on page 2");
+        when(consultationService.evaluateAnswers(any(Page.class), any(List.class))).thenReturn(response);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/consultation/answers/page2")
+                        .param("page", "PAGE_2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                [
+                                  {
+                                    "id": "2",
+                                    "section": "SYMPTOMS",
+                                    "text": "Have you been sneezing more than usual?",
+                                    "treatmentType": "ALLERGY",
+                                    "options": [
+                                      {"text": "Everyday", "score": 5},
+                                      {"text": "Sometimes", "score": 3},
+                                      {"text": "Rarely", "score": 1}
+                                    ],
+                                    "userSubmission": "Rarely"
+                                  }
+                                ]
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {"canPrescribe":false,"message":"Fail: Insufficient score on page 2"}"""));
+    }
+
 }

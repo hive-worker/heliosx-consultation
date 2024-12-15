@@ -24,9 +24,13 @@ public class ConsultationController {
         return consultationService.getQuestions(treatmentType, Page.PAGE_2);
     }
 
-    @PostMapping("/answers")
-    public PrescriptionResponse submitAnswers(@RequestParam("page") Page page,
-                                              @RequestBody List<YesNoQuestion> answers) {
-        return consultationService.evaluateAnswers(page, answers);
+    @PostMapping("/answers/page1")
+    public PrescriptionResponse submitPage1Answers(@RequestBody List<YesNoQuestion> answers) {
+        return consultationService.evaluateAnswers(Page.PAGE_1, answers);
+    }
+
+    @PostMapping("/answers/page2")
+    public PrescriptionResponse submitPage2Answers(@RequestBody List<MultipleSelectionQuestion> answers) {
+        return consultationService.evaluateAnswers(Page.PAGE_2, answers);
     }
 }

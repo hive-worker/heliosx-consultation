@@ -39,7 +39,7 @@ public class ConsultationService implements IConsultationService {
     }
 
     @Override
-    public PrescriptionResponse evaluateAnswers(Page page, List<YesNoQuestion> answers) {
+    public PrescriptionResponse evaluateAnswers(Page page, List<? extends IQuestion> answers) {
         int totalScore = 0;
         boolean matchFound = false;
 

@@ -1,14 +1,17 @@
 package com.heliosx_consultation.heliosx_consultation.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
+@NoArgsConstructor
 @Setter
 public class MultipleSelectionQuestion implements IQuestion {
 
     private String id;
+    @Getter
     private Section section;
     private String text;
     private TreatmentType treatmentType;
@@ -31,11 +34,6 @@ public class MultipleSelectionQuestion implements IQuestion {
     @Override
     public String getId() {
         return id;
-    }
-
-    @Override
-    public Section getSection() {
-        return section;
     }
 
     @Override

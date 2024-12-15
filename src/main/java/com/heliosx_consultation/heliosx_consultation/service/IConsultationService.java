@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IConsultationService {
     List<IQuestion> getQuestions(TreatmentType treatmentType, Page page);
-    PrescriptionResponse evaluateAnswers(Page page, List<YesNoQuestion> answers);
+    PrescriptionResponse evaluateAnswers(Page page, List<? extends IQuestion> answers);
 }

@@ -72,6 +72,7 @@ curl -X 'GET' \
 
 ## Future improvements
 
+* API endpoints can be better designed by using Path Variables instead of Query Parameters.
 * Being stateless it is easy to tamper with the parameters particularly `correctAnswer` parameter.
 * Security - Ensure only the front end can call the API. This can be done by using a token or a secret key.
 * There is no validation on the answers submitted. This can be done by adding validation annotations to the Question classes.

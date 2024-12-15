@@ -15,6 +15,7 @@ public class YesNoQuestion implements IQuestion {
     private TreatmentType treatmentType;
     private String correctAnswer;
     private String sorryMessage;
+    @Setter
     private String userSubmission = "";
 
     public YesNoQuestion(String id,
@@ -53,12 +54,7 @@ public class YesNoQuestion implements IQuestion {
 
     @Override
     public String getUserSubmission() {
-        return "";
-    }
-
-    @Override
-    public void setUserSubmission(String userSubmission) {
-        this.userSubmission = userSubmission;
+        return userSubmission;
     }
 
 }

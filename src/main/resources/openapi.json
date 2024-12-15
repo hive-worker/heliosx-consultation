@@ -1,0 +1,283 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Heliosx Consultation API",
+    "description": "API documentation for Heliosx Consultation",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/consultation/answers/page2": {
+      "post": {
+        "tags": [
+          "consultation-controller"
+        ],
+        "operationId": "submitPage2Answers",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MultipleSelectionQuestion"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrescriptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/consultation/answers/page1": {
+      "post": {
+        "tags": [
+          "consultation-controller"
+        ],
+        "operationId": "submitPage1Answers",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/YesNoQuestion"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrescriptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/consultation/questions/page2": {
+      "get": {
+        "tags": [
+          "consultation-controller"
+        ],
+        "operationId": "getPage2Questions",
+        "parameters": [
+          {
+            "name": "treatmentType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ALLERGY"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IQuestion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/consultation/questions/page1": {
+      "get": {
+        "tags": [
+          "consultation-controller"
+        ],
+        "operationId": "getPage1Questions",
+        "parameters": [
+          {
+            "name": "treatmentType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ALLERGY"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IQuestion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MultipleSelectionQuestion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "ABOUT_YOU",
+              "SYMPTOMS",
+              "HEALTH",
+              "AGREEMENT",
+              "TERMS_AND_CONDITIONS"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "treatmentType": {
+            "type": "string",
+            "enum": [
+              "ALLERGY"
+            ]
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Option"
+            }
+          },
+          "userSubmission": {
+            "type": "string"
+          }
+        }
+      },
+      "Option": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PrescriptionResponse": {
+        "type": "object",
+        "properties": {
+          "canPrescribe": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "YesNoQuestion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "ABOUT_YOU",
+              "SYMPTOMS",
+              "HEALTH",
+              "AGREEMENT",
+              "TERMS_AND_CONDITIONS"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "treatmentType": {
+            "type": "string",
+            "enum": [
+              "ALLERGY"
+            ]
+          },
+          "correctAnswer": {
+            "type": "string"
+          },
+          "sorryMessage": {
+            "type": "string"
+          },
+          "userSubmission": {
+            "type": "string"
+          }
+        }
+      },
+      "IQuestion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "userSubmission": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "ABOUT_YOU",
+              "SYMPTOMS",
+              "HEALTH",
+              "AGREEMENT",
+              "TERMS_AND_CONDITIONS"
+            ]
+          },
+          "treatmentType": {
+            "type": "string",
+            "enum": [
+              "ALLERGY"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

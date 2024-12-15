@@ -2,17 +2,17 @@ package com.heliosx_consultation.heliosx_consultation.controller;
 
 import com.heliosx_consultation.heliosx_consultation.model.*;
 import com.heliosx_consultation.heliosx_consultation.service.IConsultationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/consultation")
+@RequiredArgsConstructor
 public class ConsultationController {
 
-    @Autowired
-    private IConsultationService consultationService;
+    private final IConsultationService consultationService;
 
     @GetMapping("/questions/page1")
     public List<IQuestion> getPage1Questions(@RequestParam("treatmentType") TreatmentType treatmentType) {
